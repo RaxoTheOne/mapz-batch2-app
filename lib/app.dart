@@ -58,7 +58,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
       ),
       body: SafeArea(
           child: <Widget>[
-        const StartPage(),
+        const StyledPage(),
         const MapPage(),
         const StatsPagewithlist(),
         const ProfilePage(),
@@ -171,4 +171,94 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+}
+
+// Neue Start Page mit Layout
+class StyledPage extends StatelessWidget {
+  const StyledPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Home",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const Text(
+              "Statistics",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Status Boxen
+            Row(
+              children: [
+                _statusBox("123", "Commits", Icons.stacked_bar_chart),
+                const SizedBox(width: 10),
+                _statusBox("456", "Lines Code", Icons.code),
+              ],
+            ),
+            const SizedBox(height: 20),
+            const SizedBox(
+              height: 150,
+              child: Placeholder(),
+            ),
+            const SizedBox(height: 40),
+            const Text(
+              "New Activities",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const SizedBox(
+              height: 400,
+              child: Placeholder(),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Hilfsmethode zum Erstellen einer Status-Box
+Widget _statusBox(String number, String explanation, IconData iconData) {
+  return Expanded(
+    child: Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: Color.fromARGB(255, 39, 39, 46),
+      ),
+      child: Row(children: [
+        Icon(
+          iconData, // Verwendung des übergebenen Icon-Datenwertes
+          size: 40.0,
+          color: Colors.orange,
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(number,
+                style:
+                    const TextStyle(fontSize: 28, fontWeight: FontWeight.w900)),
+            Text(explanation),
+          ],
+        )
+      ]),
+    ),
+  );
 }
