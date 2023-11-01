@@ -52,7 +52,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
           ),
           NavigationDestination(
             icon: Icon(Icons.group),
-            label: 'Profile',
+            label: 'Animation',
           ),
         ],
       ),
@@ -61,7 +61,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
         const StyledPage(),
         const MapPage(),
         const StatsPagewithlist(),
-        const ProfilePage(),
+        const AnimatedContainerExample(),
       ][currentPageIndex]),
     );
   }
@@ -221,11 +221,7 @@ class StyledPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
-            const SizedBox(
-              height: 400,
-              child: Placeholder(),
-            )
+            ListItemBuilder(itemCount: 20),
           ],
         ),
       ),
@@ -261,4 +257,91 @@ Widget _statusBox(String number, String explanation, IconData iconData) {
       ]),
     ),
   );
+}
+
+//animierter Container
+
+class AnimatedContainerExample extends StatefulWidget {
+  const AnimatedContainerExample({super.key});
+
+  @override
+  _AnimatedContainerExampleState createState() =>
+      _AnimatedContainerExampleState();
+}
+
+class _AnimatedContainerExampleState extends State<AnimatedContainerExample> {
+  double _width = 100.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          AnimatedContainer(
+              duration: Duration(seconds: 10),
+              width: _width,
+              height: 100.0,
+              color: Colors.orange),
+          ElevatedButton(
+            child: Text('Zaubern'),
+            onPressed: () {
+              setState(() {
+                _width = _width == 100.0 ? 200.0 : 100.0;
+              });
+            },
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+//Listenerstellung
+class ListItemBuilder extends StatelessWidget {
+  final int itemCount;
+
+  const ListItemBuilder({required this.itemCount, Key? key}) : super(key: key);
+
+  List<Widget> _buildListItems(BuildContext context) {
+    return List.generate(
+        itemCount,
+        (index) => ListTile(
+              leading: CircleAvatar(
+                child: Text('$index'),
+                backgroundColor: Colors.orange,
+              ),
+              title: Text('Headline $index'),
+              subtitle: Text('Supporting Text - $index'),
+              trailing: Icon(Icons.favorite_rounded),
+              contentPadding: EdgeInsets.all(5),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailPage(index: index),
+                  ),
+                );
+              },
+            ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: _buildListItems(context));
+  }
+}
+
+//DetailPage
+class DetailPage extends StatelessWidget {
+  final int index;
+
+  const DetailPage({required this.index, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('DetailPage für das $index. Element')),
+      body: Center(child: Text('Das ist das $index. Element')),
+    );
+  }
 }
