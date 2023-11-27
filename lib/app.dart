@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mapz/views/start_page.dart';
-import 'package:mapz/views/stats_page.dart';
 import 'package:mapz/views/profile_page.dart';
 import 'package:mapz/views/map_page.dart';
+import 'package:mapz/views/theme.dart';
+import 'package:mapz/views/snippets.dart';
 
 //instialisierung Mapzs App
 class Mapz extends StatelessWidget {
@@ -12,9 +13,8 @@ class Mapz extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const NavigationWrapper(),
-      theme: ThemeData.dark(
-        useMaterial3: true,
-      ),
+      theme: lightTheme(),
+      darkTheme: darkTheme(),
     );
   }
 }
@@ -40,7 +40,6 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.amber[800],
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
@@ -53,7 +52,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
           ),
           NavigationDestination(
             icon: Icon(Icons.local_activity),
-            label: 'Stats',
+            label: 'Snippets',
           ),
           NavigationDestination(
             icon: Icon(Icons.group),
@@ -65,7 +64,7 @@ class _NavigationWrapperState extends State<NavigationWrapper> {
           child: <Widget>[
         const StartPage(),
         const MapPage(),
-        const StatsPagewithlist(),
+        const SnippetPage(),
         const ProfilePage(),
       ][currentPageIndex]),
     );

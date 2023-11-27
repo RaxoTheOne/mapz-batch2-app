@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mapz/widgets.dart';
 import 'package:mapz/constants.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:mapz/views/snippets/sync_vs_async.dart';
 
-class StartPage extends StatelessWidget {
-  const StartPage({super.key});
+class SnippetPage extends StatelessWidget {
+  const SnippetPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +20,14 @@ class StartPage extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "Home",
+                      "Snippets",
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
                     Text(
-                      "Statistics",
+                      "Collection",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -49,27 +49,19 @@ class StartPage extends StatelessWidget {
             // Status Boxen
             Row(
               children: [
-                statusBox(context, "123", "Commits", Icons.stacked_bar_chart),
-                const SizedBox(width: distanceS),
-                statusBox(context, "455", "Lines Code", Icons.code),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SyncAsyncDemo(),
+                      ),
+                    );
+                  },
+                  child: Text("Async vs Sync Tester"),
+                ),
               ],
             ),
-            const SizedBox(height: distanceM),
-
-            const SizedBox(
-                height: 150,
-                child: Image(
-                    image: CachedNetworkImageProvider(
-                        'https://via.placeholder.com/350x150'))),
-            const SizedBox(height: distanceL),
-            const Text(
-              "New Activities",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const ListItemBuilder(itemCount: 20),
           ],
         ),
       ),
