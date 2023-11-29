@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mapz/views/snippets/async_api.dart';
 import 'package:mapz/widgets.dart';
 import 'package:mapz/constants.dart';
 import 'package:mapz/views/snippets/sync_vs_async.dart';
@@ -47,8 +48,10 @@ class SnippetPage extends StatelessWidget {
 
             const SizedBox(height: distanceM),
             // Status Boxen
-            Row(
-              children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -59,6 +62,17 @@ class SnippetPage extends StatelessWidget {
                     );
                   },
                   child: Text("Async vs Sync Tester"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AsyncApi(),
+                      ),
+                    );
+                  },
+                  child: Text("Async API"),
                 ),
               ],
             ),

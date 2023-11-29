@@ -14,6 +14,7 @@ class _AnimatedContainerExampleState extends State<AnimatedContainerExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text("Sync vs Async Tester")),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           AnimatedContainer(
