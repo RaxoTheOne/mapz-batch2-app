@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "mapz" "\0"
+            VALUE "FileDescription", "batch2_app" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "mapz" "\0"
+            VALUE "InternalName", "batch2_app" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mapz.exe" "\0"
-            VALUE "ProductName", "mapz" "\0"
+            VALUE "OriginalFilename", "batch2_app.exe" "\0"
+            VALUE "ProductName", "batch2_app" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

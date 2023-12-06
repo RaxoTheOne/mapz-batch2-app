@@ -1,6 +1,6 @@
 {
-    "name": "mapz",
-    "short_name": "mapz",
+    "name": "batch2_app",
+    "short_name": "batch2_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
