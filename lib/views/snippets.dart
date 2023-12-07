@@ -1,6 +1,10 @@
+import 'dart:ffi';
+import 'package:batch2_app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:batch2_app/data/database_helper.dart';
 import 'package:batch2_app/data/dataset.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SnippetsPage extends StatelessWidget {
   final List<Map<String, dynamic>> snippets = [
@@ -24,10 +28,10 @@ class SnippetsPage extends StatelessWidget {
       'description': 'Basic Example for a SQLite Database',
     },
     {
-      'subpage': SnippetPage3(),
-      'icon': Icons.newspaper,
-      'name': 'New Snippet',
-      'description': 'Upcoming Snippet',
+      'subpage': ApiExamplePage(),
+      'icon': Icons.api,
+      'name': 'API Snippet (GET/POST)',
+      'description': 'Snippet to test regular REST function',
     },
     // Add more snippets here
   ];
@@ -222,5 +226,137 @@ class _DatabaseExamplePageState extends State<DatabaseExamplePage> {
                       ))
                   .toList());
         });
+  }
+}
+
+// API Example
+
+class Post {
+  final int id;
+  final String title;
+  final String body;
+
+  Post({required this.id, required this.title, required this.body});
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['id'],
+      title: json['title'],
+      body: json['body'],
+    );
+  }
+}
+
+class ApiExamplePage extends StatefulWidget {
+  @override
+  _ApiExamplePageState createState() => _ApiExamplePageState();
+}
+
+class _ApiExamplePageState extends State<ApiExamplePage> {
+  final _controller = TextEditingController();
+  String _response = '';
+  String _responseId = '';
+  String _responseUserId = '';
+  String _responseTitle = '';
+  String _responseBody = '';
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _getApiData() async {
+    if (_controller.text.isEmpty) {
+      setState(() {
+        _response = 'ID missing';
+        _responseId = 'ID missing';
+        _responseTitle = 'ID missing';
+        _responseBody = 'ID missing';
+      });
+    } else {
+      var response = await http.get(Uri.parse(
+          'https://jsonplaceholder.typicode.com/posts/${_controller.text}'));
+      setState(() {
+        _response = response.body;
+        var jsonResponse = jsonDecode(response.body);
+        var post = jsonResponse = Post.fromJson(jsonResponse);
+        _responseId = post.id.toString();
+        _responseTitle = post.title;
+        _responseBody = post.body;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('API Example'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Column(children: <Widget>[
+            TextField(
+              controller: _controller,
+              decoration: InputDecoration(labelText: 'ID'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _getApiData,
+              child: Text('Get Data'),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Response',
+                    style: Theme.of(context).textTheme.headlineSmall),
+                SizedBox(height: 10),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _responseId,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        _responseTitle,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      SizedBox(height: 20),
+                      Text(_responseBody),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 40),
+                Text('Raw Response',
+                    style: Theme.of(context).textTheme.headlineSmall),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(_response),
+                ),
+              ],
+            )
+          ]),
+        ),
+      ),
+    );
   }
 }
