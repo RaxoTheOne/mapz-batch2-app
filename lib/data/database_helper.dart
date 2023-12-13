@@ -3,8 +3,8 @@ import 'package:path/path.dart';
 import 'dataset.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "MeineDatenbank.db";
-  static final _databaseVersion = 1;
+  static const _databaseName = "MeineDatenbank.db";
+  static const _databaseVersion = 1;
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();

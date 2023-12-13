@@ -3,8 +3,14 @@ import 'package:batch2_app/views/home.dart';
 import 'package:batch2_app/views/map.dart';
 import 'package:batch2_app/views/snippets.dart';
 import 'package:batch2_app/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 
@@ -33,10 +39,10 @@ class NavigationWrapper extends StatefulWidget {
 class _NavigationWrapperState extends State<NavigationWrapper> {
   int _selectedIndex = 0;
 
-  static List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const HomePage(),
     SnippetsPage(),
-    MapPage(),
+    const MapPage(),
   ];
 
   void _onItemTapped(int index) {

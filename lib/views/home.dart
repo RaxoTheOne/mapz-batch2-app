@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Home Page'),
+          title: const Text('Home Page'),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(15),
@@ -50,6 +50,8 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 10),
               //leere box die über die ganze Breite geht
               Shimmer.fromColors(
+                baseColor: Theme.of(context).colorScheme.surface,
+                highlightColor: Theme.of(context).colorScheme.scrim,
                 child: Container(
                   height: 200,
                   width: double.infinity,
@@ -59,8 +61,6 @@ class HomePage extends StatelessWidget {
                   ),
                   margin: const EdgeInsets.only(bottom: 20),
                 ),
-                baseColor: Theme.of(context).colorScheme.surface,
-                highlightColor: Theme.of(context).colorScheme.scrim,
               ),
 
               // Text wie bei New activities nur mit "Popular Snippets"
