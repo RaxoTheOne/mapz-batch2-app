@@ -280,7 +280,6 @@ class _ApiExamplePageState extends State<ApiExamplePage> {
   final _controller = TextEditingController();
   String _response = '';
   String _responseId = '';
-  final String _responseUserId = '';
   String _responseTitle = '';
   String _responseBody = '';
 
